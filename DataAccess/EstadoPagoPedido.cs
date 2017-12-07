@@ -11,7 +11,8 @@ namespace DataAccess
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class EstadoPagoPedido
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,8 +20,10 @@ namespace DataAccess
         {
             this.Pedido = new HashSet<Pedido>();
         }
-    
+
+        [Key]
         public short ID { get; set; }
+        [Display(Name = "Estado Pago")]
         public string Descripcion { get; set; }
         public Nullable<bool> Activo { get; set; }
     

@@ -20,7 +20,8 @@ namespace DataAccess
         {
             this.Pedido = new HashSet<Pedido>();
         }
-    
+        
+        
         public int ID { get; set; }
         [Display(Name = "Nombre y Apellido")]
         public string NombreApellido { get; set; }

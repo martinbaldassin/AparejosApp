@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="jumbotron">
+    <h1>Gestión de Pedidos</h1>
+    <p class="lead">Agregar, modificar y eliminar pedidos</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <a href="#" class="btn btn-success btn-block" id="btnNuevo">Nuevo Pedido</a>
+    </div>
+</div>
+
+<div class="row" style="margin:50px">
+    <div class="col-md-12">
+        <table id="grillaPedido"></table>
+    </div>
+</div>
+
+<!-- Modal Agregar -->
+<div class="modal fade" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="modalAgregarLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalAgregarLabel"> Nuevo </h4>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="idPedido" i value="" />
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Nombre</label>
+                            <input class="form-control" id="nombre" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Domicilio</label>
+                            <input id="domicilio" placeholder="Ingrese una dirección..." class="form-control" type="text" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Buscar localidad</label>
+                            <select id="selectCodPostal" class="form-control"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Localidad</label>
+                            <input id="localidad" class="form-control" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Cod. Postal</label>
+                            <input id="codPostal" class="form-control" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Teléfono</label>
+                            <input id="telefono" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Fax</label>
+                            <input id="fax" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <label class="control-label">Email</label>
+                        <input id="email" type="email" class="form-control" placeholder="mail@mail.com" />
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+                <br />
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h2 class="panel-title"> Datos Fiscales</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row" style="margin:0px">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Cuit / Cuil</label>
+                                    <input id="cuit-cuil" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label">Responsabilidad</label>
+                                    <select id="selectResponsabilidad" class="form-control"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="btnSalir">Salir</button>
+                <button type="button" class="btn btn-primary" id="btnGuardar">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>

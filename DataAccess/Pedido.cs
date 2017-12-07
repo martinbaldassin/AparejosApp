@@ -11,22 +11,31 @@ namespace DataAccess
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Pedido
     {
         public long ID { get; set; }
+        [Display(Name = "Cliente")]
         public int ClienteID { get; set; }
+        [Display(Name = "Producto")]
         public short ProductoID { get; set; }
+        [Display(Name = "Estado de Pago")]
         public short EstadoPagoPedidoID { get; set; }
+        [Display(Name = "Tipo de Pedido")]
         public short TipoPedidoID { get; set; }
+        [Display(Name = "Estado de Fabricación")]
         public short EstadoFabricacionPedidoID { get; set; }
+        [Display(Name = "Fecha Estimada de Entrega")]
         public Nullable<System.DateTime> FechaEstimadaEntrega { get; set; }
         public Nullable<System.DateTime> FechaCreacion { get; set; }
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public short Cantidad { get; set; }
+        [Display(Name = "Total($)")]
         public double TotalPrecio { get; set; }
         public string Observaciones { get; set; }
         public Nullable<bool> Activo { get; set; }
+        [Display(Name = "Tipo de Carro")]
         public short TipoCarroID { get; set; }
     
         public virtual Clientes Clientes { get; set; }

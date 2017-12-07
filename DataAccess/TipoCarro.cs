@@ -11,7 +11,8 @@ namespace DataAccess
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class TipoCarro
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,8 +20,9 @@ namespace DataAccess
         {
             this.Pedido = new HashSet<Pedido>();
         }
-    
+
         public short ID { get; set; }
+        [Display(Name = "Tipo de Carro")]
         public string Descripcion { get; set; }
         public Nullable<bool> Activo { get; set; }
     

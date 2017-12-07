@@ -63,7 +63,21 @@
             @Html.DisplayFor(modelItem => item.CodigoPostal)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.EsUsuarioFinal)
+            @if (item.EsUsuarioFinal != null)
+            {
+                if (item.EsUsuarioFinal.Value)
+                {
+                    <p>Usuario Final</p>
+                }
+                else
+                {
+                    <p>Cliente </p>
+                }
+            }
+            else
+            {
+                <p> </p>
+            }
         </td>
         <td>
             @Html.ActionLink("Editar", "Edit", new { id=item.ID }) |

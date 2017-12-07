@@ -1,0 +1,64 @@
+﻿@model IEnumerable<DataAccess.Pedido>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Clientes.NombreApellido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EstadoFabricacionPedido.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EstadoPagoPedido.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Productos.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TipoPedido.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TipoCarro.Descripcion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Clientes.NombreApellido)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EstadoFabricacionPedido.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EstadoPagoPedido.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Productos.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TipoPedido.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TipoCarro.Descripcion)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Detalle", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -75,7 +75,7 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.EsUsuarioFinal.Value, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.EsUsuarioFinal, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
                     <select name="EsUsuarioFinal" hidden>
@@ -83,7 +83,7 @@
                         <option value="false"></option>
                     </select>
                     <input type="checkbox" class="js-switch" name="usuarioFinal" value="" checked="" />
-                    @Html.ValidationMessageFor(model => model.EsUsuarioFinal.Value, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.EsUsuarioFinal, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
