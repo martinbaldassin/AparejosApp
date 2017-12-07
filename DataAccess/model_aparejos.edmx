@@ -1,0 +1,501 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AparejosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clientes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreApellido" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CuitCuil" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Domicilio" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Localidad" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="CodigoPostal" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Activo" Type="bit" />
+          <Property Name="EsUsuarioFinal" Type="bit" />
+        </EntityType>
+        <EntityType Name="EstadoFabricacionPedido">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Activo" Type="bit" />
+        </EntityType>
+        <EntityType Name="EstadoPagoPedido">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Activo" Type="bit" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClienteID" Type="int" Nullable="false" />
+          <Property Name="ProductoID" Type="smallint" Nullable="false" />
+          <Property Name="EstadoPagoPedidoID" Type="smallint" Nullable="false" />
+          <Property Name="TipoPedidoID" Type="smallint" Nullable="false" />
+          <Property Name="EstadoFabricacionPedidoID" Type="smallint" Nullable="false" />
+          <Property Name="FechaEstimadaEntrega" Type="date" />
+          <Property Name="FechaCreacion" Type="date" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="Cantidad" Type="smallint" Nullable="false" />
+          <Property Name="TotalPrecio" Type="float" Nullable="false" />
+          <Property Name="Observaciones" Type="nvarchar(max)" />
+          <Property Name="Activo" Type="bit" />
+          <Property Name="TipoCarroID" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Productos">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Especificacion" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Activo" Type="bit" />
+          <Property Name="Precio" Type="float" Nullable="false" />
+          <Property Name="MetrosCadena" Type="smallint" />
+        </EntityType>
+        <EntityType Name="TipoCarro">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Activo" Type="bit" />
+        </EntityType>
+        <EntityType Name="TipoPedido">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Activo" Type="bit" />
+        </EntityType>
+        <Association Name="Pedido_fk0">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Pedido_fk1">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="ProductoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Pedido_fk2">
+          <End Role="EstadoPagoPedido" Type="Self.EstadoPagoPedido" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoPagoPedido">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="EstadoPagoPedidoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Pedido_fk3">
+          <End Role="TipoPedido" Type="Self.TipoPedido" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoPedido">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="TipoPedidoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Pedido_fk4">
+          <End Role="EstadoFabricacionPedido" Type="Self.EstadoFabricacionPedido" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoFabricacionPedido">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="EstadoFabricacionPedidoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Pedido_fk5">
+          <End Role="TipoCarro" Type="Self.TipoCarro" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoCarro">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="TipoCarroID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AparejosModelStoreContainer">
+          <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EstadoFabricacionPedido" EntityType="Self.EstadoFabricacionPedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EstadoPagoPedido" EntityType="Self.EstadoPagoPedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pedido" EntityType="Self.Pedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Productos" EntityType="Self.Productos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoCarro" EntityType="Self.TipoCarro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoPedido" EntityType="Self.TipoPedido" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Pedido_fk0" Association="Self.Pedido_fk0">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="Pedido_fk1" Association="Self.Pedido_fk1">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="Pedido_fk2" Association="Self.Pedido_fk2">
+            <End Role="EstadoPagoPedido" EntitySet="EstadoPagoPedido" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="Pedido_fk3" Association="Self.Pedido_fk3">
+            <End Role="TipoPedido" EntitySet="TipoPedido" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="Pedido_fk4" Association="Self.Pedido_fk4">
+            <End Role="EstadoFabricacionPedido" EntitySet="EstadoFabricacionPedido" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="Pedido_fk5" Association="Self.Pedido_fk5">
+            <End Role="TipoCarro" EntitySet="TipoCarro" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AparejosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Clientes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="NombreApellido" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CuitCuil" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Domicilio" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Localidad" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CodigoPostal" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" />
+          <Property Name="EsUsuarioFinal" Type="Boolean" />
+          <NavigationProperty Name="Pedido" Relationship="Self.Pedido_fk0" FromRole="Clientes" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="EstadoFabricacionPedido">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int16" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" />
+          <NavigationProperty Name="Pedido" Relationship="Self.Pedido_fk4" FromRole="EstadoFabricacionPedido" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="EstadoPagoPedido">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int16" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" />
+          <NavigationProperty Name="Pedido" Relationship="Self.Pedido_fk2" FromRole="EstadoPagoPedido" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="ClienteID" Type="Int32" Nullable="false" />
+          <Property Name="ProductoID" Type="Int16" Nullable="false" />
+          <Property Name="EstadoPagoPedidoID" Type="Int16" Nullable="false" />
+          <Property Name="TipoPedidoID" Type="Int16" Nullable="false" />
+          <Property Name="EstadoFabricacionPedidoID" Type="Int16" Nullable="false" />
+          <Property Name="FechaEstimadaEntrega" Type="DateTime" Precision="0" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="0" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="Cantidad" Type="Int16" Nullable="false" />
+          <Property Name="TotalPrecio" Type="Double" Nullable="false" />
+          <Property Name="Observaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Activo" Type="Boolean" />
+          <Property Name="TipoCarroID" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Clientes" Relationship="Self.Pedido_fk0" FromRole="Pedido" ToRole="Clientes" />
+          <NavigationProperty Name="EstadoFabricacionPedido" Relationship="Self.Pedido_fk4" FromRole="Pedido" ToRole="EstadoFabricacionPedido" />
+          <NavigationProperty Name="EstadoPagoPedido" Relationship="Self.Pedido_fk2" FromRole="Pedido" ToRole="EstadoPagoPedido" />
+          <NavigationProperty Name="Productos" Relationship="Self.Pedido_fk1" FromRole="Pedido" ToRole="Productos" />
+          <NavigationProperty Name="TipoPedido" Relationship="Self.Pedido_fk3" FromRole="Pedido" ToRole="TipoPedido" />
+          <NavigationProperty Name="TipoCarro" Relationship="Self.Pedido_fk5" FromRole="Pedido" ToRole="TipoCarro" />
+        </EntityType>
+        <EntityType Name="Productos">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int16" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Especificacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" />
+          <Property Name="Precio" Type="Double" Nullable="false" />
+          <Property Name="MetrosCadena" Type="Int16" />
+          <NavigationProperty Name="Pedido" Relationship="Self.Pedido_fk1" FromRole="Productos" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="TipoCarro">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int16" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" />
+          <NavigationProperty Name="Pedido" Relationship="Self.Pedido_fk5" FromRole="TipoCarro" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="TipoPedido">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int16" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" />
+          <NavigationProperty Name="Pedido" Relationship="Self.Pedido_fk3" FromRole="TipoPedido" ToRole="Pedido" />
+        </EntityType>
+        <Association Name="Pedido_fk0">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Pedido_fk4">
+          <End Role="EstadoFabricacionPedido" Type="Self.EstadoFabricacionPedido" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoFabricacionPedido">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="EstadoFabricacionPedidoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Pedido_fk2">
+          <End Role="EstadoPagoPedido" Type="Self.EstadoPagoPedido" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoPagoPedido">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="EstadoPagoPedidoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Pedido_fk1">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="ProductoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Pedido_fk3">
+          <End Role="TipoPedido" Type="Self.TipoPedido" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoPedido">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="TipoPedidoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Pedido_fk5">
+          <End Role="TipoCarro" Type="Self.TipoCarro" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoCarro">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="TipoCarroID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AparejosEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clientes" EntityType="Self.Clientes" />
+          <EntitySet Name="EstadoFabricacionPedido" EntityType="Self.EstadoFabricacionPedido" />
+          <EntitySet Name="EstadoPagoPedido" EntityType="Self.EstadoPagoPedido" />
+          <EntitySet Name="Pedido" EntityType="Self.Pedido" />
+          <EntitySet Name="Productos" EntityType="Self.Productos" />
+          <EntitySet Name="TipoCarro" EntityType="Self.TipoCarro" />
+          <EntitySet Name="TipoPedido" EntityType="Self.TipoPedido" />
+          <AssociationSet Name="Pedido_fk0" Association="Self.Pedido_fk0">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="Pedido_fk4" Association="Self.Pedido_fk4">
+            <End Role="EstadoFabricacionPedido" EntitySet="EstadoFabricacionPedido" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="Pedido_fk2" Association="Self.Pedido_fk2">
+            <End Role="EstadoPagoPedido" EntitySet="EstadoPagoPedido" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="Pedido_fk1" Association="Self.Pedido_fk1">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="Pedido_fk3" Association="Self.Pedido_fk3">
+            <End Role="TipoPedido" EntitySet="TipoPedido" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="Pedido_fk5" Association="Self.Pedido_fk5">
+            <End Role="TipoCarro" EntitySet="TipoCarro" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AparejosModelStoreContainer" CdmEntityContainer="AparejosEntities">
+          <EntitySetMapping Name="Clientes">
+            <EntityTypeMapping TypeName="AparejosModel.Clientes">
+              <MappingFragment StoreEntitySet="Clientes">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NombreApellido" ColumnName="NombreApellido" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CuitCuil" ColumnName="CuitCuil" />
+                <ScalarProperty Name="Domicilio" ColumnName="Domicilio" />
+                <ScalarProperty Name="Localidad" ColumnName="Localidad" />
+                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="EsUsuarioFinal" ColumnName="EsUsuarioFinal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EstadoFabricacionPedido">
+            <EntityTypeMapping TypeName="AparejosModel.EstadoFabricacionPedido">
+              <MappingFragment StoreEntitySet="EstadoFabricacionPedido">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EstadoPagoPedido">
+            <EntityTypeMapping TypeName="AparejosModel.EstadoPagoPedido">
+              <MappingFragment StoreEntitySet="EstadoPagoPedido">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pedido">
+            <EntityTypeMapping TypeName="AparejosModel.Pedido">
+              <MappingFragment StoreEntitySet="Pedido">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+                <ScalarProperty Name="ProductoID" ColumnName="ProductoID" />
+                <ScalarProperty Name="EstadoPagoPedidoID" ColumnName="EstadoPagoPedidoID" />
+                <ScalarProperty Name="TipoPedidoID" ColumnName="TipoPedidoID" />
+                <ScalarProperty Name="EstadoFabricacionPedidoID" ColumnName="EstadoFabricacionPedidoID" />
+                <ScalarProperty Name="FechaEstimadaEntrega" ColumnName="FechaEstimadaEntrega" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="TotalPrecio" ColumnName="TotalPrecio" />
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="TipoCarroID" ColumnName="TipoCarroID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Productos">
+            <EntityTypeMapping TypeName="AparejosModel.Productos">
+              <MappingFragment StoreEntitySet="Productos">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Especificacion" ColumnName="Especificacion" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="MetrosCadena" ColumnName="MetrosCadena" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoCarro">
+            <EntityTypeMapping TypeName="AparejosModel.TipoCarro">
+              <MappingFragment StoreEntitySet="TipoCarro">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoPedido">
+            <EntityTypeMapping TypeName="AparejosModel.TipoPedido">
+              <MappingFragment StoreEntitySet="TipoPedido">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

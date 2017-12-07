@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5fc0fa7fe8164d7d80008d05d15f5a0f" Name="Diagram1">
+        <EntityTypeShape EntityType="AparejosModel.Clientes" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AparejosModel.EstadoFabricacionPedido" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="AparejosModel.EstadoPagoPedido" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AparejosModel.Pedido" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AparejosModel.Productos" Width="1.5" PointX="0.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AparejosModel.TipoCarro" Width="1.5" PointX="0.75" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AparejosModel.TipoPedido" Width="1.5" PointX="0.75" PointY="16.75" IsExpanded="true" />
+        <AssociationConnector Association="AparejosModel.Pedido_fk0" ManuallyRouted="false" />
+        <AssociationConnector Association="AparejosModel.Pedido_fk4" ManuallyRouted="false" />
+        <AssociationConnector Association="AparejosModel.Pedido_fk2" ManuallyRouted="false" />
+        <AssociationConnector Association="AparejosModel.Pedido_fk1" ManuallyRouted="false" />
+        <AssociationConnector Association="AparejosModel.Pedido_fk3" ManuallyRouted="false" />
+        <AssociationConnector Association="AparejosModel.Pedido_fk5" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
