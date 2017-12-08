@@ -20,18 +20,19 @@ namespace DataAccess
         public int ClienteID { get; set; }
         [Display(Name = "Producto")]
         public short ProductoID { get; set; }
-        [Display(Name = "Estado de Pago")]
+        [Display(Name = "Estado del pago")]
         public short EstadoPagoPedidoID { get; set; }
-        [Display(Name = "Tipo de Pedido")]
+        [Display(Name = "Tipo de pedido")]
         public short TipoPedidoID { get; set; }
-        [Display(Name = "Estado de Fabricación")]
+        [Display(Name = "Estado de fabricación")]
         public short EstadoFabricacionPedidoID { get; set; }
-        [Display(Name = "Fecha Estimada de Entrega")]
+        [Display(Name = "Fecha de Entrega")]
         public Nullable<System.DateTime> FechaEstimadaEntrega { get; set; }
         public Nullable<System.DateTime> FechaCreacion { get; set; }
+        [Display(Name = "Fecha De Modificación")]
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public short Cantidad { get; set; }
-        [Display(Name = "Total($)")]
+        [Display(Name = "Subtotal")]
         public double TotalPrecio { get; set; }
         public string Observaciones { get; set; }
         public Nullable<bool> Activo { get; set; }

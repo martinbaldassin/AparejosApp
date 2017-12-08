@@ -10,12 +10,12 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NombreApellido" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="NombreApellido" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Telefono" Type="nvarchar" MaxLength="13" Nullable="false" />
           <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CuitCuil" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="Domicilio" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Localidad" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Localidad" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CodigoPostal" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Activo" Type="bit" />
           <Property Name="EsUsuarioFinal" Type="bit" />
@@ -60,7 +60,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Descripcion" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Especificacion" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Activo" Type="bit" />
           <Property Name="Precio" Type="float" Nullable="false" />
@@ -196,12 +196,12 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="NombreApellido" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NombreApellido" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Telefono" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CuitCuil" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Domicilio" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Localidad" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Localidad" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CodigoPostal" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Activo" Type="Boolean" />
           <Property Name="EsUsuarioFinal" Type="Boolean" />
@@ -255,7 +255,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int16" Nullable="false" />
-          <Property Name="Descripcion" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Especificacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Activo" Type="Boolean" />
           <Property Name="Precio" Type="Double" Nullable="false" />

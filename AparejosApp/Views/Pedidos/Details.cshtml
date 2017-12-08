@@ -1,30 +1,63 @@
 ﻿@model DataAccess.Pedido
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalle";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Detalle</h2>
 
 <div>
-    <h4>Pedido</h4>
+    <h4>Pedido Nº @Model.ID</h4>
     <hr />
     <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Clientes.NombreApellido)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Clientes.NombreApellido)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Productos.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Productos.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoCarro.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoCarro.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoPedido.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoPedido.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EstadoFabricacionPedido.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EstadoFabricacionPedido.Descripcion)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.FechaEstimadaEntrega)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.FechaEstimadaEntrega)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaCreacion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FechaCreacion)
         </dd>
 
         <dt>
@@ -56,32 +89,9 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Observaciones)
+            @Html.TextAreaFor(model => model.Observaciones, new { @class = "form-control", @rows = "4" ,@readonly="readonly"})
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Activo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Activo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Clientes.NombreApellido)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Clientes.NombreApellido)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EstadoFabricacionPedido.Descripcion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EstadoFabricacionPedido.Descripcion)
-        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.EstadoPagoPedido.Descripcion)
@@ -91,33 +101,9 @@
             @Html.DisplayFor(model => model.EstadoPagoPedido.Descripcion)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Productos.Descripcion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Productos.Descripcion)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TipoPedido.Descripcion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TipoPedido.Descripcion)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TipoCarro.Descripcion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TipoCarro.Descripcion)
-        </dd>
-
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Volver", "Index")
 </p>

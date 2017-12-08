@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DataAccess;
+using System.Data.Entity.Validation;
 
 namespace AparejosApp.Controllers
 {
@@ -57,7 +58,6 @@ namespace AparejosApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             return View(productos);
         }
 

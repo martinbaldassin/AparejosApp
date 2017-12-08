@@ -20,7 +20,7 @@ namespace DataAccess
         {
             this.Pedido = new HashSet<Pedido>();
         }
-
+    
         public short ID { get; set; }
         [Display(Name = "Tipo de Pedido")]
         public string Descripcion { get; set; }

@@ -77,9 +77,17 @@
             @Html.LabelFor(model => model.EsUsuarioFinal, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.EsUsuarioFinal)
+                    <select name="EsUsuarioFinal" hidden>
+                        <option value="true"></option>
+                        <option value="false"></option>
+                    </select>
+                    <input type="checkbox" class="js-switch" name="usuarioFinal" value="" checked="@Model.EsUsuarioFinal" />
                     @Html.ValidationMessageFor(model => model.EsUsuarioFinal, "", new { @class = "text-danger" })
                 </div>
+                @*<div class="checkbox">
+                    @Html.EditorFor(model => model.EsUsuarioFinal)
+                    @Html.ValidationMessageFor(model => model.EsUsuarioFinal, "", new { @class = "text-danger" })
+                </div>*@
             </div>
         </div>
 
@@ -94,3 +102,26 @@
 <div>
     @Html.ActionLink("Volver", "Index")
 </div>
+
+<script type="text/javascript">
+    var elem = document.querySelector('.js-switch');
+    var init = new Switchery(elem,
+        {
+            size: 'small',
+            secondaryColor: '#a3a1a1'
+        }
+    );
+    $(document).ready(function () {
+
+        $('.js-switch').on('change', function (eventData) {
+            if (eventData.target.checked) {
+                $("select[name=EsUsuarioFinal]").val('true');
+                $("select[name=EsUsuarioFinal]").trigger('change');
+            } else {
+                $("select[name=EsUsuarioFinal]").val('false');
+                $("select[name=EsUsuarioFinal]").trigger('change');
+            }
+        });
+
+    });
+</script>

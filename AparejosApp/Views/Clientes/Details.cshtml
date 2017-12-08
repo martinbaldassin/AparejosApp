@@ -73,7 +73,16 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.EsUsuarioFinal)
+            @if (Model.EsUsuarioFinal != null) {
+                if (Model.EsUsuarioFinal.Value)
+                {
+                    <span>Usuario Final</span>
+                }
+                else
+                {
+                    <span>Cliente</span>
+                }
+            }
         </dd>
 
     </dl>

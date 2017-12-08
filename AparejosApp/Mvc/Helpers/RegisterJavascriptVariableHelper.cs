@@ -9,7 +9,6 @@ namespace AparejosApp.Mvc.Helpers
     using Extensions;
     public static class RegisterJavascriptVariableHelper
     {
-
         public static MvcHtmlString RegisterJavascriptVariable(this HtmlHelper Helper, string name, object value)
         {
             return GetHtmlContent(name, value);

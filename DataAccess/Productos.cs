@@ -20,14 +20,14 @@ namespace DataAccess
         {
             this.Pedido = new HashSet<Pedido>();
         }
-
+    
         public short ID { get; set; }
         [Display(Name = "Producto")]
         public string Descripcion { get; set; }
         public string Especificacion { get; set; }
         public Nullable<bool> Activo { get; set; }
         public double Precio { get; set; }
-        [Display(Name ="Metros de cadena")]
+        [Display(Name = "Metros de cadena")]
         public Nullable<short> MetrosCadena { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

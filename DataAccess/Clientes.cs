@@ -20,21 +20,20 @@ namespace DataAccess
         {
             this.Pedido = new HashSet<Pedido>();
         }
-        
-        
+    
         public int ID { get; set; }
         [Display(Name = "Nombre y Apellido")]
         public string NombreApellido { get; set; }
         public string Telefono { get; set; }
         public string Email { get; set; }
-        [Display(Name = "CUIT o CUIL")]
+        [Display(Name = "Cuit o Cuil")]
         public string CuitCuil { get; set; }
         public string Domicilio { get; set; }
         public string Localidad { get; set; }
         [Display(Name = "Código Postal")]
         public string CodigoPostal { get; set; }
         public Nullable<bool> Activo { get; set; }
-        [Display(Name = "Usuario final")]
+        [Display(Name = "¿Es usuario Final?")]
         public Nullable<bool> EsUsuarioFinal { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

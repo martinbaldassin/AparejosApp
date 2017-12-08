@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
     @Styles.Render("~/Content/css")
-    
+    <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+   
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -26,7 +27,7 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Productos", "Index", "Productos")</li>
                     <li>@Html.ActionLink("Clientes", "Index", "Clientes")</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Pedidos", "Index", "Pedidos")</li>
                 </ul>
             </div>
         </div>

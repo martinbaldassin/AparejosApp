@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DataAccess;
+using AparejosApp.Models;
 
 namespace AparejosApp.Controllers
 {
@@ -17,7 +18,14 @@ namespace AparejosApp.Controllers
         // GET: Pedidos
         public ActionResult Index()
         {
-            var pedido = db.Pedido.Include(p => p.Clientes).Include(p => p.EstadoFabricacionPedido).Include(p => p.EstadoPagoPedido).Include(p => p.Productos).Include(p => p.TipoPedido).Include(p => p.TipoCarro);
+            var pedido = db.Pedido.Include(p => p.Clientes)
+                .Include(p => p.EstadoFabricacionPedido)
+                .Include(p => p.EstadoPagoPedido)
+                .Include(p => p.Productos)
+                .Include(p => p.TipoPedido)
+                .Include(p => p.TipoCarro)
+                .OrderByDescending(p => p.TipoPedido.Descripcion)
+                .ThenByDescending(p => p.FechaCreacion);
             return View(pedido.ToList());
         }
 
@@ -39,35 +47,50 @@ namespace AparejosApp.Controllers
         // GET: Pedidos/Create
         public ActionResult Create()
         {
-            ViewBag.ClienteID = new SelectList(db.Clientes, "ID", "NombreApellido");
-            ViewBag.EstadoFabricacionPedidoID = new SelectList(db.EstadoFabricacionPedido, "ID", "Descripcion");
-            ViewBag.EstadoPagoPedidoID = new SelectList(db.EstadoPagoPedido, "ID", "Descripcion");
-            ViewBag.ProductoID = new SelectList(db.Productos, "ID", "Descripcion");
-            ViewBag.TipoPedidoID = new SelectList(db.TipoPedido, "ID", "Descripcion");
-            ViewBag.TipoCarroID = new SelectList(db.TipoCarro, "ID", "Descripcion");
+            ViewBag.ClienteID = new SelectList(db.Clientes.Where(x => x.Activo != null && x.Activo.Value), "ID", "NombreApellido");
+            ViewBag.EstadoFabricacionPedidoID = new SelectList(db.EstadoFabricacionPedido.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
+            ViewBag.EstadoPagoPedidoID = new SelectList(db.EstadoPagoPedido.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
+            ViewBag.ProductoID = new SelectList(db.Productos.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
+            ViewBag.ListProductos = GetListProductos();
+            ViewBag.TipoPedidoID = new SelectList(db.TipoPedido.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
+            ViewBag.TipoCarroID = new SelectList(db.TipoCarro.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
             return View();
         }
 
+        private List<SelectProducto> GetListProductos()
+        {
+            List<SelectProducto> listProductos = new List<SelectProducto>();
+            listProductos.AddRange(db.Productos.Where(x => x.Activo != null && x.Activo.Value).Select(y => new SelectProducto() {
+                ID = y.ID,
+                Precio = y.Precio
+            }).ToList());
+
+            return listProductos;
+        }
         // POST: Pedidos/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,ClienteID,ProductoID,EstadoPagoPedidoID,TipoPedidoID,EstadoFabricacionPedidoID,FechaEstimadaEntrega,FechaCreacion,FechaModificacion,Cantidad,TotalPrecio,Observaciones,Activo,TipoCarroID")] Pedido pedido)
+        public ActionResult Create(Pedido pedido)
         {
             if (ModelState.IsValid)
             {
+                pedido.Activo = true;
+                pedido.FechaCreacion = DateTime.Now;
+                
                 db.Pedido.Add(pedido);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ClienteID = new SelectList(db.Clientes, "ID", "NombreApellido", pedido.ClienteID);
-            ViewBag.EstadoFabricacionPedidoID = new SelectList(db.EstadoFabricacionPedido, "ID", "Descripcion", pedido.EstadoFabricacionPedidoID);
-            ViewBag.EstadoPagoPedidoID = new SelectList(db.EstadoPagoPedido, "ID", "Descripcion", pedido.EstadoPagoPedidoID);
-            ViewBag.ProductoID = new SelectList(db.Productos, "ID", "Descripcion", pedido.ProductoID);
-            ViewBag.TipoPedidoID = new SelectList(db.TipoPedido, "ID", "Descripcion", pedido.TipoPedidoID);
-            ViewBag.TipoCarroID = new SelectList(db.TipoCarro, "ID", "Descripcion", pedido.TipoCarroID);
+            ViewBag.ClienteID = new SelectList(db.Clientes.Where(x => x.Activo != null && x.Activo.Value), "ID", "NombreApellido");
+            ViewBag.EstadoFabricacionPedidoID = new SelectList(db.EstadoFabricacionPedido.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
+            ViewBag.EstadoPagoPedidoID = new SelectList(db.EstadoPagoPedido.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
+            ViewBag.ProductoID = new SelectList(db.Productos.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
+            ViewBag.ListProductos = GetListProductos();
+            ViewBag.TipoPedidoID = new SelectList(db.TipoPedido.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
+            ViewBag.TipoCarroID = new SelectList(db.TipoCarro.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
             return View(pedido);
         }
 
@@ -83,12 +106,13 @@ namespace AparejosApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ClienteID = new SelectList(db.Clientes, "ID", "NombreApellido", pedido.ClienteID);
-            ViewBag.EstadoFabricacionPedidoID = new SelectList(db.EstadoFabricacionPedido, "ID", "Descripcion", pedido.EstadoFabricacionPedidoID);
-            ViewBag.EstadoPagoPedidoID = new SelectList(db.EstadoPagoPedido, "ID", "Descripcion", pedido.EstadoPagoPedidoID);
-            ViewBag.ProductoID = new SelectList(db.Productos, "ID", "Descripcion", pedido.ProductoID);
-            ViewBag.TipoPedidoID = new SelectList(db.TipoPedido, "ID", "Descripcion", pedido.TipoPedidoID);
-            ViewBag.TipoCarroID = new SelectList(db.TipoCarro, "ID", "Descripcion", pedido.TipoCarroID);
+            ViewBag.ClienteID = new SelectList(db.Clientes.Where(x => x.Activo != null && x.Activo.Value), "ID", "NombreApellido");
+            ViewBag.EstadoFabricacionPedidoID = new SelectList(db.EstadoFabricacionPedido.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
+            ViewBag.EstadoPagoPedidoID = new SelectList(db.EstadoPagoPedido.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
+            ViewBag.ProductoID = new SelectList(db.Productos.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
+            ViewBag.ListProductos = GetListProductos();
+            ViewBag.TipoPedidoID = new SelectList(db.TipoPedido.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
+            ViewBag.TipoCarroID = new SelectList(db.TipoCarro.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
             return View(pedido);
         }
 
@@ -101,6 +125,7 @@ namespace AparejosApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                pedido.FechaModificacion = DateTime.Now;
                 db.Entry(pedido).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -131,13 +156,23 @@ namespace AparejosApp.Controllers
 
         // POST: Pedidos/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(long id)
+        //[ValidateAntiForgeryToken]
+        public JsonResult DeleteConfirmed(long id)
         {
-            Pedido pedido = db.Pedido.Find(id);
-            db.Pedido.Remove(pedido);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            bool seBorro = false;
+            try
+            {
+                Pedido pedido = db.Pedido.Find(id);
+                db.Pedido.Remove(pedido);
+                db.SaveChanges();
+                seBorro = true;
+            }
+            catch (Exception)
+            {
+                seBorro = false;
+            }
+            
+            return Json(seBorro, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

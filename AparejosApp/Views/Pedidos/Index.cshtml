@@ -4,11 +4,11 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<link href="~/Content/sweetalert.css" rel="stylesheet" />
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Agregar un pedido", "Create")
 </p>
 <table class="table">
     <tr>
@@ -56,9 +56,14 @@
         <td>
             @Html.ActionLink("Editar", "Edit", new { id=item.ID }) |
             @Html.ActionLink("Detalle", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Eliminar", "Delete", new { id=item.ID })
+            <a href="#" onclick="EliminarPedido(@item.ID)">Eliminar</a>
         </td>
     </tr>
 }
 
 </table>
+
+@section Scripts{
+    <script src="~/Scripts/sweetalert.min.js"></script>
+    <script src="~/Scripts/Pedidos/Pedidos-General.js"></script>
+    }
