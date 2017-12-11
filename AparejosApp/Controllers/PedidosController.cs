@@ -13,6 +13,16 @@ namespace AparejosApp.Controllers
 {
     public class PedidosController : Controller
     {
+        enum EstadoFabricacionPedido
+        {
+            SinSeleccionar,
+            Pedido,
+            EnProduccion,
+            FaltaDeMaterial,
+            Terminado,
+            Despachado
+        }
+
         private AparejosEntities db = new AparejosEntities();
 
         // GET: Pedidos
@@ -48,7 +58,7 @@ namespace AparejosApp.Controllers
         public ActionResult Create()
         {
             ViewBag.ClienteID = new SelectList(db.Clientes.Where(x => x.Activo != null && x.Activo.Value), "ID", "NombreApellido");
-            ViewBag.EstadoFabricacionPedidoID = new SelectList(db.EstadoFabricacionPedido.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
+            //ViewBag.EstadoFabricacionPedidoID = new SelectList(db.EstadoFabricacionPedido.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
             ViewBag.EstadoPagoPedidoID = new SelectList(db.EstadoPagoPedido.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
             ViewBag.ProductoID = new SelectList(db.Productos.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
             ViewBag.ListProductos = GetListProductos();
@@ -78,7 +88,7 @@ namespace AparejosApp.Controllers
             {
                 pedido.Activo = true;
                 pedido.FechaCreacion = DateTime.Now;
-                
+                pedido.EstadoFabricacionPedidoID = (int)EstadoFabricacionPedido.Pedido;
                 db.Pedido.Add(pedido);
                 db.SaveChanges();
                 return RedirectToAction("Index");

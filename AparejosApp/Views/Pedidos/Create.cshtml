@@ -8,6 +8,16 @@
 
 <h2>Nuevo</h2>
 
+<style>
+    label.error {
+        color: red;
+    }
+
+    .valid {
+        color: green;
+    }
+</style>
+
 @*@using (Html.BeginForm("Create", "Pedidos", FormMethod.Post, new { @id = "form-pedido" })) 
 {*@
 <form id="form-pedido" action="@Url.Action("Create","Pedidos")" method="post">
@@ -61,18 +71,20 @@
             </div>
         </div>
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.EstadoFabricacionPedidoID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("EstadoFabricacionPedidoID", null, "Seleccione...", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.EstadoFabricacionPedidoID, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.FechaEstimadaEntrega, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10 input-group date">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span><input type="text" name="FechaEstimadaEntrega" readonly="readonly" class="form-control" style="width:26.5%">
+            <div class="col-md-10">
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span><input type="text" name="FechaEstimadaEntrega" readonly="readonly" class="form-control" style="width:26.5%">
+                </div>
             </div>
         </div>
 
@@ -87,10 +99,11 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.TotalPrecio, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TotalPrecio, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.TotalPrecio, "", new { @class = "text-danger" })
+            <div class="col-md-10 input-group">
+                <span class="input-group-addon">$</span>
+                <input type="text" name="TotalPrecio" disabled="disabled" class="form-control" style="width:26.5%">
             </div>
+           
         </div>
 
         <div class="form-group">
@@ -103,7 +116,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Agregar" class="btn btn-info" />
+                <input id="submitPedido" type="submit" value="Agregar" class="btn btn-info" />
             </div>
         </div>
     </div>
@@ -116,11 +129,12 @@
 @section Scripts{
     <script src="~/Scripts/bootstrap-datepicker.js"></script>
     <script src="~/Scripts/locales/bootstrap-datepicker.es.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
 
     <script type="text/javascript">
         var initialJsonData = {};
         @Html.RegisterJavascriptVariable("initialJsonData.ListProductos", (List<SelectProducto>)ViewBag.ListProductos)
 
     </script>
-<script src="~/Scripts/Pedidos/Pedidos.js"></script>
+    <script src="~/Scripts/Pedidos/Pedidos-Create.js"></script>
     }

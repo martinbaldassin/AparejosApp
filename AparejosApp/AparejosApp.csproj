@@ -245,7 +245,7 @@
     <Content Include="Scripts\locales\bootstrap-datepicker.zh-TW.min.js" />
     <Content Include="Scripts\Pedidos\Pedidos-General.js" />
     <Content Include="Scripts\Pedidos\pedidos-todos.js" />
-    <Content Include="Scripts\Pedidos\Pedidos.js" />
+    <Content Include="Scripts\Pedidos\Pedidos-Create.js" />
     <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="Scripts\switchery.js" />
     <Content Include="favicon.ico" />
