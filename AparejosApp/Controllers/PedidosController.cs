@@ -53,7 +53,7 @@ namespace AparejosApp.Controllers
                         .Include(p => p.TipoPedido)
                         .Include(p => p.TipoCarro)
                         .Where(p => p.EstadoFabricacionPedidoID == (int)Enumeradores.EstadoFabricacionPedido.Terminado)
-                        .OrderByDescending(p => p.FechaCreacion >= fechaDesde && p.FechaCreacion <= fechaHasta).ToList();
+                        .OrderByDescending(p => p.FechaModificacion >= fechaDesde && p.FechaModificacion <= fechaHasta).ToList();
                     }
                     break;
                 case TipoFiltroPedidos.Terminados:
@@ -65,7 +65,7 @@ namespace AparejosApp.Controllers
                         .Include(p => p.TipoCarro)
                         .Where(p => p.EstadoFabricacionPedidoID == (int)Enumeradores.EstadoFabricacionPedido.Terminado
                             && p.TipoPedidoID == (int)Enumeradores.TipoPedido.Urgente)
-                        .OrderBy(p => p.FechaCreacion).ToList());
+                        .OrderByDescending(p => p.FechaModificacion).ToList());
 
                     pedidos.AddRange(db.Pedido.Include(p => p.Clientes)
                         .Include(p => p.EstadoFabricacionPedido)
@@ -75,7 +75,7 @@ namespace AparejosApp.Controllers
                         .Include(p => p.TipoCarro)
                         .Where(p => p.EstadoFabricacionPedidoID == (int)Enumeradores.EstadoFabricacionPedido.Terminado
                             && p.TipoPedidoID == (int)Enumeradores.TipoPedido.Reclamo)
-                        .OrderBy(p => p.FechaCreacion).ToList());
+                        .OrderByDescending(p => p.FechaModificacion).ToList());
 
                     pedidos.AddRange(db.Pedido.Include(p => p.Clientes)
                         .Include(p => p.EstadoFabricacionPedido)
@@ -85,7 +85,7 @@ namespace AparejosApp.Controllers
                         .Include(p => p.TipoCarro)
                         .Where(p => p.EstadoFabricacionPedidoID == (int)Enumeradores.EstadoFabricacionPedido.Terminado
                             && p.TipoPedidoID == (int)Enumeradores.TipoPedido.Normal)
-                        .OrderBy(p => p.FechaCreacion).ToList());
+                        .OrderByDescending(p => p.FechaModificacion).ToList());
                     break;
             }
 
