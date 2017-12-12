@@ -1,15 +1,40 @@
 ﻿@model IEnumerable<DataAccess.Pedido>
-
+@using AparejosApp.Models
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link href="~/Content/sweetalert.css" rel="stylesheet" />
+<link href="~/Scripts/daterangepicker.css" rel="stylesheet" />
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Agregar un pedido", "Create")
+    @Html.ActionLink("Agregar un pedido", "Create","Pedidos", new { @class = "btn btn-warning" })
 </p>
+
+<form class="row" method="get" action="@Url.Action("Index","Pedidos")">
+    <div class="col-md-4">
+        <input type="radio" name="tipoFiltro" value="@Enumeradores.TipoFiltroPedidos.PorRangoFechaYTerminados" />
+        &nbsp;<label>Ver pedidos terminados entre fechas</label>
+    </div>
+    <div class="col-md-4">
+        <input type="radio" name="tipoFiltro" value="@Enumeradores.TipoFiltroPedidos.Terminados" />
+        &nbsp;<label>Ver pedidos terminados por prioridad</label>
+    </div>
+    <div class="col-md-2">
+        <input type="radio" name="tipoFiltro" value="@Enumeradores.TipoFiltroPedidos.Normal" />
+        &nbsp;<label>Ver Todos</label>
+    </div>
+    <div class="col-md-2">
+        <input type="submit" value="Obtener" class="btn btn-success btn-block" />
+    </div><br />
+    <div class="form-group col-md-6" hidden id="RangoFechas">
+        <label class="control-label">Seleccione las fechas:&nbsp;</label>
+        <input class="form-control" type="text" name="rangoFechas" value="" />
+    </div><br />
+</form>
+    
+
 <table class="table">
     <tr>
         <th>
@@ -65,5 +90,8 @@
 
 @section Scripts{
     <script src="~/Scripts/sweetalert.min.js"></script>
-    <script src="~/Scripts/Pedidos/Pedidos-General.js"></script>
+    
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/daterangepicker.js"></script>
+<script src="~/Scripts/Pedidos/Pedidos-General.js"></script>
     }

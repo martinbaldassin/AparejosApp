@@ -43,3 +43,79 @@ function EliminarPedido(ID) {
     });
 
 }
+
+$(document).ready(function () {
+    $("input[name=tipoFiltro]").on('click', function (eventArgs) {
+        if (eventArgs.target.value == 'PorRangoFechaYTerminados') {
+            $("#RangoFechas").show("slow");
+        } else {
+            $("#RangoFechas").hide("slow");
+        }
+        
+    });
+    $('input[name=rangoFechas]').daterangepicker({
+        "showWeekNumbers": true,
+        "ranges": {
+            "Hoy": [
+                new moment().format("DD/MM/YYYY"),
+                new moment().format("DD/MM/YYYY")
+            ],
+            "Ayer": [
+                new moment().add(-1,'d').format("DD/MM/YYYY"),
+                new moment().format("DD/MM/YYYY")
+            ],
+            "Última Semana": [
+                new moment().add(-7,'d').format("DD/MM/YYYY"),
+                new moment().format("DD/MM/YYYY")
+            ],
+            "Este mes": [
+                new moment().add(-1, 'M').format("DD/MM/YYYY"),
+                new moment().format("DD/MM/YYYY")
+            ],
+
+        },
+        "locale": {
+            "format": "DD/MM/YYYY",
+            "separator": " - ",
+            "applyLabel": "Aplicar",
+            "cancelLabel": "Cancelar",
+            "fromLabel": "Desde",
+            "toLabel": "Hasta",
+            "customRangeLabel": "Personalizado",
+            "weekLabel": "Sem",
+            "daysOfWeek": [
+                "Do",
+                "Lu",
+                "Ma",
+                "Mie",
+                "Jue",
+                "Vie",
+                "Sa"
+            ],
+            "monthNames": [
+                "Enero",
+                "Febrero",
+                "Marzo",
+                "Abril",
+                "Mayo",
+                "Junio",
+                "Julio",
+                "Agosto",
+                "Septiembre",
+                "Octubre",
+                "Noviembre",
+                "Diciembre"
+            ],
+            "firstDay": 1
+        },
+        "autoUpdateInput": true,
+        "showCustomRangeLabel": true,
+        "alwaysShowCalendars": false,
+        "startDate": new Date(),
+        "endDate": new Date(),
+        "opens": "center"
+    }, function (start, end, label) {
+        });
+
+    $('input[name=rangoFechas]').val("");
+});

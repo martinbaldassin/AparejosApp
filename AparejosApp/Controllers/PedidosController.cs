@@ -8,37 +8,90 @@ using System.Web;
 using System.Web.Mvc;
 using DataAccess;
 using AparejosApp.Models;
+using static AparejosApp.Models.Enumeradores;
 
 namespace AparejosApp.Controllers
 {
     public class PedidosController : Controller
     {
-        enum EstadoFabricacionPedido
-        {
-            SinSeleccionar,
-            Pedido,
-            EnProduccion,
-            FaltaDeMaterial,
-            Terminado,
-            Despachado
-        }
 
         private AparejosEntities db = new AparejosEntities();
 
         // GET: Pedidos
-        public ActionResult Index()
+        public ActionResult Index(string rangoFechas = "",
+                                  TipoFiltroPedidos tipoFiltro = TipoFiltroPedidos.Normal)
         {
-            var pedido = db.Pedido.Include(p => p.Clientes)
-                .Include(p => p.EstadoFabricacionPedido)
-                .Include(p => p.EstadoPagoPedido)
-                .Include(p => p.Productos)
-                .Include(p => p.TipoPedido)
-                .Include(p => p.TipoCarro)
-                .OrderByDescending(p => p.TipoPedido.Descripcion)
-                .ThenByDescending(p => p.FechaCreacion);
-            return View(pedido.ToList());
-        }
+            List<Pedido> pedidos = new List<Pedido>();
+            DateTime fechaDesde = new DateTime(1000000);
+            DateTime fechaHasta = new DateTime();
+            bool fechaDesdeCorrecta = false;
+            bool fechaHastaCorrecta = false;
+            
+            switch (tipoFiltro)
+            {
+                case TipoFiltroPedidos.Normal:
+                    pedidos = db.Pedido.Include(p => p.Clientes)
+                        .Include(p => p.EstadoFabricacionPedido)
+                        .Include(p => p.EstadoPagoPedido)
+                        .Include(p => p.Productos)
+                        .Include(p => p.TipoPedido)
+                        .Include(p => p.TipoCarro)
+                        .ToList();
+                    break;
+                case TipoFiltroPedidos.PorRangoFechaYTerminados:
+                    if (!String.IsNullOrEmpty(rangoFechas))
+                    {
+                        fechaDesdeCorrecta = DateTime.TryParse(rangoFechas.Split('-')[0].Trim(), out fechaDesde);
+                        fechaHastaCorrecta = DateTime.TryParse(rangoFechas.Split('-')[1].Trim(), out fechaHasta);
+                    }
+                    if (fechaDesdeCorrecta && fechaHastaCorrecta)
+                    {
+                        pedidos = db.Pedido.Include(p => p.Clientes)
+                        .Include(p => p.EstadoFabricacionPedido)
+                        .Include(p => p.EstadoPagoPedido)
+                        .Include(p => p.Productos)
+                        .Include(p => p.TipoPedido)
+                        .Include(p => p.TipoCarro)
+                        .Where(p => p.EstadoFabricacionPedidoID == (int)Enumeradores.EstadoFabricacionPedido.Terminado)
+                        .OrderByDescending(p => p.FechaCreacion >= fechaDesde && p.FechaCreacion <= fechaHasta).ToList();
+                    }
+                    break;
+                case TipoFiltroPedidos.Terminados:
+                    pedidos.AddRange(db.Pedido.Include(p => p.Clientes)
+                        .Include(p => p.EstadoFabricacionPedido)
+                        .Include(p => p.EstadoPagoPedido)
+                        .Include(p => p.Productos)
+                        .Include(p => p.TipoPedido)
+                        .Include(p => p.TipoCarro)
+                        .Where(p => p.EstadoFabricacionPedidoID == (int)Enumeradores.EstadoFabricacionPedido.Terminado
+                            && p.TipoPedidoID == (int)Enumeradores.TipoPedido.Urgente)
+                        .OrderBy(p => p.FechaCreacion).ToList());
 
+                    pedidos.AddRange(db.Pedido.Include(p => p.Clientes)
+                        .Include(p => p.EstadoFabricacionPedido)
+                        .Include(p => p.EstadoPagoPedido)
+                        .Include(p => p.Productos)
+                        .Include(p => p.TipoPedido)
+                        .Include(p => p.TipoCarro)
+                        .Where(p => p.EstadoFabricacionPedidoID == (int)Enumeradores.EstadoFabricacionPedido.Terminado
+                            && p.TipoPedidoID == (int)Enumeradores.TipoPedido.Reclamo)
+                        .OrderBy(p => p.FechaCreacion).ToList());
+
+                    pedidos.AddRange(db.Pedido.Include(p => p.Clientes)
+                        .Include(p => p.EstadoFabricacionPedido)
+                        .Include(p => p.EstadoPagoPedido)
+                        .Include(p => p.Productos)
+                        .Include(p => p.TipoPedido)
+                        .Include(p => p.TipoCarro)
+                        .Where(p => p.EstadoFabricacionPedidoID == (int)Enumeradores.EstadoFabricacionPedido.Terminado
+                            && p.TipoPedidoID == (int)Enumeradores.TipoPedido.Normal)
+                        .OrderBy(p => p.FechaCreacion).ToList());
+                    break;
+            }
+
+            return View(pedidos);
+        }
+        
         // GET: Pedidos/Details/5
         public ActionResult Details(long? id)
         {
@@ -88,7 +141,7 @@ namespace AparejosApp.Controllers
             {
                 pedido.Activo = true;
                 pedido.FechaCreacion = DateTime.Now;
-                pedido.EstadoFabricacionPedidoID = (int)EstadoFabricacionPedido.Pedido;
+                pedido.EstadoFabricacionPedidoID = (int)Enumeradores.EstadoFabricacionPedido.Pedido;
                 db.Pedido.Add(pedido);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -116,13 +169,13 @@ namespace AparejosApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ClienteID = new SelectList(db.Clientes.Where(x => x.Activo != null && x.Activo.Value), "ID", "NombreApellido");
-            ViewBag.EstadoFabricacionPedidoID = new SelectList(db.EstadoFabricacionPedido.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
-            ViewBag.EstadoPagoPedidoID = new SelectList(db.EstadoPagoPedido.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
-            ViewBag.ProductoID = new SelectList(db.Productos.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
+            ViewBag.ClienteID = new SelectList(db.Clientes.Where(x => x.Activo != null && x.Activo.Value), "ID", "NombreApellido", pedido.ClienteID);
+            ViewBag.EstadoFabricacionPedidoID = new SelectList(db.EstadoFabricacionPedido.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion", pedido.EstadoFabricacionPedidoID);
+            ViewBag.EstadoPagoPedidoID = new SelectList(db.EstadoPagoPedido.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion", pedido.EstadoPagoPedidoID);
+            ViewBag.ProductoID = new SelectList(db.Productos.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion",pedido.ProductoID);
             ViewBag.ListProductos = GetListProductos();
-            ViewBag.TipoPedidoID = new SelectList(db.TipoPedido.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
-            ViewBag.TipoCarroID = new SelectList(db.TipoCarro.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion");
+            ViewBag.TipoPedidoID = new SelectList(db.TipoPedido.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion", pedido.TipoPedidoID);
+            ViewBag.TipoCarroID = new SelectList(db.TipoCarro.Where(x => x.Activo != null && x.Activo.Value), "ID", "Descripcion", pedido.TipoCarroID);
             return View(pedido);
         }
 
