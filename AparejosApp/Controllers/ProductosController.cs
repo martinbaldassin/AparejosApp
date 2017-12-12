@@ -81,7 +81,7 @@ namespace AparejosApp.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Descripcion,Especificacion,Precio,MetrosCadena")] Productos productos)
+        public ActionResult Edit( Productos productos)
         {
             if (ModelState.IsValid)
             {

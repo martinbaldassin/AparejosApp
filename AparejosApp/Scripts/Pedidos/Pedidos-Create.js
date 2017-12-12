@@ -87,6 +87,13 @@ $(document).ready(function () {
 
     ValidateFormPedido();
 
+    if ($("select[name=ProductoID]").val() != "") {
+        debugger;
+        productoSeleccionado = initialJsonData.ListProductos.filter(function (producto) {
+            return producto.ID == $("select[name=ProductoID]").val();
+        })[0];
+    }
+
     //Para la vista Editar:
     if (document.getElementById('FechaEstimadaHidden')) {
         var fechaEstimadaAEditar = $("#FechaEstimadaHidden").val();
@@ -115,6 +122,7 @@ $(document).ready(function () {
 
     $("input[name=Cantidad]").on('change', function (eventArgs) {
         var subtotal = 0;
+        debugger;
         var cantidad = parseInt(eventArgs.target.value);
         if (productoSeleccionado) {
             subtotal = cantidad * productoSeleccionado.Precio;

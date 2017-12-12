@@ -92,9 +92,8 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.TotalPrecio, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10 input-group">
-                <span class="input-group-addon">$</span>
-                <input type="text" name="TotalPrecio" disabled="disabled" class="form-control" style="width:26.5%">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TotalPrecio, new { htmlAttributes = new { @class = "form-control" } })
             </div>
            
         </div>

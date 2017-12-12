@@ -52,8 +52,9 @@ namespace AparejosApp.Controllers
                         .Include(p => p.Productos)
                         .Include(p => p.TipoPedido)
                         .Include(p => p.TipoCarro)
-                        .Where(p => p.EstadoFabricacionPedidoID == (int)Enumeradores.EstadoFabricacionPedido.Terminado)
-                        .OrderByDescending(p => p.FechaModificacion >= fechaDesde && p.FechaModificacion <= fechaHasta).ToList();
+                        .Where(p => p.EstadoFabricacionPedidoID == (int)Enumeradores.EstadoFabricacionPedido.Terminado
+                            && p.FechaModificacion >= fechaDesde && p.FechaModificacion <= fechaHasta)
+                        .OrderByDescending(p => p.FechaModificacion).ToList();
                     }
                     break;
                 case TipoFiltroPedidos.Terminados:
